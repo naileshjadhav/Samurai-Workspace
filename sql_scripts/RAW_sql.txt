@@ -1,0 +1,54 @@
+create table products
+(
+ DDL_DATE date,DDL_USER VARCHAR2(15),OBJ_CREATED VARCHAR2(15), OBJ_NAME VARCHAR2(15), DDL_OPERATION VARCHAR2(15)
+);
+
+create table products_audit as select * from products;
+-----
+CREATE USER nailesh IDENTIFIED BY nailesh DEFAULT TABLESPACE nailesh TEMPORARY TABLESPACE nailesh1 QUOTA UNLIMITED ON nailesh;
+
+grant alter session, create cluster, create database link, create sequence,
+  create session, create synonym, create table, create view, create procedure,
+  create trigger, query rewrite to role_nailesh;
+-----
+select * from user_errors where type = 'TRIGGER' and  name = 'TRG_PRD_INS';
+
+@C:\Users\Nailesh\Desktop\1.sql
+
+alter user nailesh quota unlimited on USERS;
+
+select * from    user_errors where    type = 'TRIGGER' and    name = 'TRIG_NAME';
+-----------The error ORA-65096: invalid common user or role name is a Oracle error--------.
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+ 
+SQL> alter session set "_ORACLE_SCRIPT"=true;
+Session altered.
+ 
+SQL> commit;
+Commit complete.
+ 
+SQL> CREATE USER nailesh IDENTIFIED BY nailesh DEFAULT TABLESPACE users TEMPORARY TABLESPACE test1 QUOTA UNLIMITED ON users;
+User created.
+ 
+SQL> conn nailesh/nailesh
+ERROR: ORA-01045: user ARADMIN lacks CREATE SESSION privilege; logon denied
+ 
+SQL> create role nailesh_role not identified;
+Role created.
+ 
+SQL> grant alter session, create cluster, create database link, create sequence,
+  create session, create synonym, create table, create view, create procedure,
+  create trigger, query rewrite to nailesh_role;
+Grant succeeded.
+ 
+SQL> commit;
+Commit complete.
+ 
+SQL> grant nailesh_role to nailesh;
+Grant succeeded.
+ 
+SQL> commit;
+Commit complete.
+--------------------------------
