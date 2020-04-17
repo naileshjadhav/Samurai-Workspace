@@ -1,4 +1,4 @@
-package com.zensar.samurai.entity;
+package com.zensar.samurai.registration.entiry;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +13,16 @@ public class SamuraiUser {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id", length = 20, columnDefinition = "default 1000")
 	private Long userId;
-	@Column(name = "user_name", length = 50, nullable = false, unique = true)
+	@Column(name = "user_name", length = 50, nullable = false)
 	private String userName;
-	@Column(name = "user_email", length = 50, nullable = false, unique = true)
+	@Column(name = "user_email", length = 50, nullable = false)
 	private String userEmail;
-	@Column(name = "user_organization", length = 50, nullable = false, unique = true)
-	private String organization;
+	@Column(name = "user_organisation", length = 50, nullable = false)
+	private String userOrganisation;
+	@Column(name = "user_mobile", length = 12, nullable = true)
+	private String userMobileNo;
 	private LocalDateTime registrationDate;
 
 	public LocalDateTime getRegistrationDate() {
@@ -30,20 +33,20 @@ public class SamuraiUser {
 		this.registrationDate = registrationDate;
 	}
 
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getUserEmail() {
@@ -54,12 +57,20 @@ public class SamuraiUser {
 		this.userEmail = userEmail;
 	}
 
-	public String getOrganization() {
-		return organization;
+	public String getUserOrganisation() {
+		return userOrganisation;
 	}
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setUserOrganisation(String userOrganisation) {
+		this.userOrganisation = userOrganisation;
+	}
+
+	public String getUserMobileNo() {
+		return userMobileNo;
+	}
+
+	public void setUserMobileNo(String userMobileNo) {
+		this.userMobileNo = userMobileNo;
 	}
 
 }

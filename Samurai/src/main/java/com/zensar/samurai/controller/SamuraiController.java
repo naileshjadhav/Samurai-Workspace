@@ -34,7 +34,7 @@ public class SamuraiController {
 	}
 
 	@GetMapping("/path/{name}")
-	public ResponseEntity<SamuraiPathDto> test(@PathVariable String name) {
+	public ResponseEntity<SamuraiPathDto> getPathByName(@PathVariable String name) {
 		log.info("Requested path:: {}", name);
 		SamuraiPathDto pathDto = new SamuraiPathDto();
 		if (name != null && name != "") {
