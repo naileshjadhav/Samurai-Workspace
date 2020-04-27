@@ -9,7 +9,7 @@ sudo chmod g+x conf
 sudo chown -R tomcat webapps/ work/ temp/ logs/
 #Created a systemd Unit File as tomcat_service
 #Save and close the tomcat_service file and notify systemd that we created a new unit file as below
-sudo vim /etc/systemd/system/tomcat.service
+sudo vi /etc/systemd/system/tomcat.service
 sudo systemctl daemon-reload
 #Start the Tomcat service by executing:
 sudo systemctl start tomcat

@@ -1,6 +1,8 @@
 package com.zensar.SamuraiZenAnalyticaIntegration.exception;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,9 +50,24 @@ public class SamuraiExceptionControllerAdvice extends ResponseEntityExceptionHan
 	@ExceptionHandler(Exception.class)
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, @Nullable Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
+		List<String> errors = new ArrayList<String>();
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
+
+			errors.add(ex.getMessage());
+			errors.add(ex.getCause().getLocalizedMessage());
 		}
-		return new ResponseEntity<>(body, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(errors, headers, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	@ExceptionHandler(ResourceNotFound.class)
+	protected ResponseEntity<Object> handleNotFound(ResourceNotFound ex, WebRequest request) {
+
+		ErrorDetails errors = new ErrorDetails();
+		errors.setTimestamp(new Date());
+		errors.setMessage(ex.getMessage());
+		errors.setDetails(ex.getLocalizedMessage());
+		errors.setStatus(HttpStatus.NOT_FOUND.name());
+		return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
 	}
 }
