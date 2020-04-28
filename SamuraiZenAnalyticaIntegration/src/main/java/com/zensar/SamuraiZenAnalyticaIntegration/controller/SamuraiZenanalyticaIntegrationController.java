@@ -39,6 +39,7 @@ public class SamuraiZenanalyticaIntegrationController {
 
 		log.info("Started rpa call...........");
 		rpaDto.setRequestDateTime(LocalDateTime.now());
+		rpaDto.setEformStatusByPlatform("Open");
 		SamuraiRpaDto rpaDto2 = service.saveRpaRequest(rpaDto);
 		log.info("Saved samuraiRpaId:: " + rpaDto2.getSamuraiRpaId());
 
