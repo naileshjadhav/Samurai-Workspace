@@ -1,5 +1,7 @@
 package com.zensar.samurai.registration.controller;
 
+import java.time.LocalDateTime;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ public class SamuraiRegistrationController {
 		log.info("user name:: {}", userDetails.getUserName());
 		log.info("user email:: {}", userDetails.getUserEmail());
 		log.info("user organisation:: {}", userDetails.getUserOrganisation());
+		userDetails.setRegistrationDate(LocalDateTime.now());
 		userDetails = pathService.saveSamuraiUserDetails(userDetails);
 		return new ResponseEntity<SamuraiUserDto>(userDetails, HttpStatus.CREATED);
 	}

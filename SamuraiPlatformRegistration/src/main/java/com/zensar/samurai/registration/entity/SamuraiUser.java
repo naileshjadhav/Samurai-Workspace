@@ -1,34 +1,31 @@
-package com.zensar.samurai.registration.model;
+package com.zensar.samurai.registration.entity;
 
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-public class SamuraiUserDto {
+@Entity(name = "samurai_user")
+public class SamuraiUser {
 
-	@NotBlank
-	@NotNull
-	private String userName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id", length = 20, columnDefinition = "default 1000")
 	private Long userId;
-	@NotBlank
-	@NotNull
+	@Column(name = "user_name", length = 50, nullable = false)
+	private String userName;
+	@Column(name = "user_email", length = 50, nullable = false)
 	private String userEmail;
-	@NotBlank
-	@NotNull
+	@Column(name = "user_organisation", length = 50, nullable = false)
 	private String userOrganisation;
+	@Column(name = "user_mobile", length = 12, nullable = true)
 	private String userMobileNo;
 	private LocalDateTime registrationDate;
+	@Column(name = "user_password", length = 500, nullable = false)
 	private String userPassword;
-	private String encryptedPassword;
-
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
 
 	public String getUserPassword() {
 		return userPassword;

@@ -1,13 +1,13 @@
 package com.zensar.samurai.registration.service;
 
-import java.time.LocalDateTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.zensar.samurai.registration.entiry.SamuraiUser;
+import com.zensar.samurai.registration.entity.SamuraiUser;
 import com.zensar.samurai.registration.exception.ResourceNotFound;
 import com.zensar.samurai.registration.model.SamuraiUserDto;
 import com.zensar.samurai.registration.repository.RegistrationServiceRepository;
@@ -20,16 +20,15 @@ public class SamuraiRegistrationServiceImpl implements SamuraiRegistrationServic
 	@Autowired
 	private RegistrationServiceRepository repository;
 
+	private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+
 	@Override
 	public SamuraiUserDto saveSamuraiUserDetails(SamuraiUserDto userDetails) {
 
 		log.info("saving user details.....");
 		SamuraiUser user = new SamuraiUser();
-		user.setUserEmail(userDetails.getUserEmail());
-		user.setUserMobileNo(userDetails.getUserMobileNo());
-		user.setUserName(userDetails.getUserName());
-		user.setUserOrganisation(userDetails.getUserOrganisation());
-		user.setRegistrationDate(LocalDateTime.now());
+		BeanUtils.copyProperties(userDetails, user);
+		user.setUserPassword(bCryptPasswordEncoder.encode(userDetails.getUserPassword()));
 		user = repository.save(user);
 		log.info("user details....." + user.getUserId());
 		return userDetails;
@@ -42,12 +41,8 @@ public class SamuraiRegistrationServiceImpl implements SamuraiRegistrationServic
 		SamuraiUserDto dto = new SamuraiUserDto();
 		SamuraiUser user = repository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFound("User not found for: " + userId));
-		dto.setRegistrationDate(user.getRegistrationDate());
-		dto.setUserEmail(user.getUserEmail());
-		dto.setUserMobileNo(user.getUserMobileNo());
-		dto.setUserName(user.getUserName());
-		dto.setUserOrganisation(user.getUserOrganisation());
-		log.info("user details name....." + user.getUserName());
+		BeanUtils.copyProperties(user, dto);
+		log.info("user details name....." + dto.getUserName());
 		return dto;
 	}
 
@@ -57,12 +52,8 @@ public class SamuraiRegistrationServiceImpl implements SamuraiRegistrationServic
 		SamuraiUserDto dto = new SamuraiUserDto();
 		SamuraiUser user = repository.getUserByUserName(userName)
 				.orElseThrow(() -> new ResourceNotFound("User not found for: " + userName));
-		dto.setRegistrationDate(user.getRegistrationDate());
-		dto.setUserEmail(user.getUserEmail());
-		dto.setUserMobileNo(user.getUserMobileNo());
-		dto.setUserName(user.getUserName());
-		dto.setUserOrganisation(user.getUserOrganisation());
-		log.info("user details id....." + user.getUserId());
+		BeanUtils.copyProperties(user, dto);
+		log.info("user details id....." + dto.getUserId());
 		return dto;
 	}
 

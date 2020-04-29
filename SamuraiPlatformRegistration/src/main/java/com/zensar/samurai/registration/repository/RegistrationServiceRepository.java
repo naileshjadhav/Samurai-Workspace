@@ -7,7 +7,7 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.zensar.samurai.registration.entiry.SamuraiUser;
+import com.zensar.samurai.registration.entity.SamuraiUser;
 
 /**
  * @author Nailesh

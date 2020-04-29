@@ -1,11 +1,12 @@
 create schema if not exists samurai;
 use samurai;
 CREATE TABLE if not exists `samurai_user` (
-  `user_id` bigint(20) NOT NULL,
-  `user_organisation` varchar(50) NOT NULL,
+  `user_id` bigint(50) NOT NULL,
+  `user_password` varchar(500) NOT NULL,
+  `user_organisation` varchar(100) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_name` varchar(50) NOT NULL,
-  `user_mobile` varchar(50),
+  `user_mobile` varchar(20),
   `registration_date` datetime,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `UK_t668lsjdqws9vgt1evkxgcpgu` (`user_organisation`),
