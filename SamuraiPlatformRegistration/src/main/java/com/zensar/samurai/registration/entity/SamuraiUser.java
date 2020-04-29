@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class SamuraiUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", length = 20, columnDefinition = "default 1000")
 	private Long userId;
 	@Column(name = "user_name", length = 50, nullable = false)

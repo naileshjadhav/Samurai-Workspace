@@ -20,15 +20,6 @@ public class SamuraiUserDto {
 	private String userMobileNo;
 	private LocalDateTime registrationDate;
 	private String userPassword;
-	private String encryptedPassword;
-
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
 
 	public String getUserPassword() {
 		return userPassword;

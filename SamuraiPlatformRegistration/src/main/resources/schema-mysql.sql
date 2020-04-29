@@ -1,7 +1,7 @@
 create schema if not exists samurai;
 use samurai;
 CREATE TABLE if not exists `samurai_user` (
-  `user_id` bigint(50) NOT NULL,
+  `user_id` bigint(50) NOT NULL AUTO_INCREMENT,
   `user_password` varchar(500) NOT NULL,
   `user_organisation` varchar(100) NOT NULL,
   `user_email` varchar(50) NOT NULL,
