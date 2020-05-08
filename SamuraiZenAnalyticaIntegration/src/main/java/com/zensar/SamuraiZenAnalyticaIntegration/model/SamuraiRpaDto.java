@@ -1,6 +1,8 @@
 package com.zensar.SamuraiZenAnalyticaIntegration.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,7 +21,6 @@ public class SamuraiRpaDto {
 	private LocalDateTime requestDateTime;
 	private String severity;
 	private String impact;
-	@NotNull
 	private Long eformId;
 	@NotNull
 	@NotBlank
@@ -27,41 +28,14 @@ public class SamuraiRpaDto {
 	private String eformStatusByPlatform;
 	private LocalDateTime eformStatusUpdateDate;
 	private String platformRemarks;
-	private String dbConnectionUrl;
-	private String solutionType;
-	private String resolutionPlatform;
-	private String resolutionResponse;
+	private List<SamuraiAnalyticaDto> analyticaDtos = new ArrayList<SamuraiAnalyticaDto>();
 
-	public String getSolutionType() {
-		return solutionType;
+	public List<SamuraiAnalyticaDto> getAnalyticaDtos() {
+		return analyticaDtos;
 	}
 
-	public void setSolutionType(String solutionType) {
-		this.solutionType = solutionType;
-	}
-
-	public String getResolutionPlatform() {
-		return resolutionPlatform;
-	}
-
-	public void setResolutionPlatform(String resolutionPlatform) {
-		this.resolutionPlatform = resolutionPlatform;
-	}
-
-	public String getResolutionResponse() {
-		return resolutionResponse;
-	}
-
-	public void setResolutionResponse(String resolutionResponse) {
-		this.resolutionResponse = resolutionResponse;
-	}
-
-	public String getDbConnectionUrl() {
-		return dbConnectionUrl;
-	}
-
-	public void setDbConnectionUrl(String dbConnectionUrl) {
-		this.dbConnectionUrl = dbConnectionUrl;
+	public void setAnalyticaDtos(List<SamuraiAnalyticaDto> analyticaDtos) {
+		this.analyticaDtos = analyticaDtos;
 	}
 
 	public String getEvent() {

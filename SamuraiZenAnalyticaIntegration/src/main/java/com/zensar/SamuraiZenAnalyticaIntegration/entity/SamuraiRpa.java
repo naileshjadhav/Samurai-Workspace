@@ -1,12 +1,18 @@
 package com.zensar.SamuraiZenAnalyticaIntegration.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity(name = "samurai_rpa")
 public class SamuraiRpa {
@@ -25,57 +31,32 @@ public class SamuraiRpa {
 	private LocalDateTime requestDateTime;
 	@Column(name = "severity", length = 10)
 	private String severity;
-	@Column(name = "impact", length = 10)
+	@Column(name = "impact", length = 20)
 	private String impact;
-	@Column(name = "eform_id", length = 10)
+	@Column(name = "eform_id", length = 20)
 	private Long eformId;
-	@Column(name = "type_of_request", length = 10)
+	@Column(name = "type_of_request", length = 20)
 	private String typeOfRequest;
-	@Column(name = "eform_status_by_platform", length = 20)
+	@Column(name = "eform_status_by_platform", length = 50)
 	private String eformStatusByPlatform;
 	@Column(name = "eform_status_update_date")
 	private LocalDateTime eformStatusUpdateDate;
-	@Column(name = "platform_remarks", length = 20)
+	@Column(name = "platform_remarks", length = 100)
 	private String platformRemarks;
-	@Column(name = "db_connection_url", length = 50)
-	private String dbConnectionUrl;
-	@Column(name = "solution_type", length = 50)
-	private String solutionType;
-	@Column(name = "resolution_platform", length = 50)
-	private String resolutionPlatform;
-	@Column(name = "resolution_response", length = 1000)
-	private String resolutionResponse;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "samurai_rpa_id")
+	private List<SamuraiAnalytica> analytica = new ArrayList<SamuraiAnalytica>();
 
-	public String getSolutionType() {
-		return solutionType;
+	public boolean addAnalytica(SamuraiAnalytica analytica) {
+		return this.analytica.add(analytica);
 	}
 
-	public void setSolutionType(String solutionType) {
-		this.solutionType = solutionType;
+	public List<SamuraiAnalytica> getAnalytica() {
+		return analytica;
 	}
 
-	public String getResolutionPlatform() {
-		return resolutionPlatform;
-	}
-
-	public void setResolutionPlatform(String resolutionPlatform) {
-		this.resolutionPlatform = resolutionPlatform;
-	}
-
-	public String getResolutionResponse() {
-		return resolutionResponse;
-	}
-
-	public void setResolutionResponse(String resolutionResponse) {
-		this.resolutionResponse = resolutionResponse;
-	}
-
-	public String getDbConnectionUrl() {
-		return dbConnectionUrl;
-	}
-
-	public void setDbConnectionUrl(String dbConnectionUrl) {
-		this.dbConnectionUrl = dbConnectionUrl;
+	public void setAnalytica(List<SamuraiAnalytica> analytica) {
+		this.analytica = analytica;
 	}
 
 	public Long getSamuraiRpaId() {
