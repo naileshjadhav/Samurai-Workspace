@@ -34,6 +34,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.SamuraiAnalyticaDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.SamuraiRpaDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.StartInfo;
+import com.zensar.SamuraiZenAnalyticaIntegration.model.UserRatingDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.WrapperBotDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.service.SamuraiRpaService;
 
@@ -48,6 +49,8 @@ public class SamuraiZenanalyticaIntegrationController {
 	SamuraiRpaService service;
 	@Value("${analyticaUri}")
 	private String analyticaUri;
+	@Value("${ratingUpdateUri}")
+	private String ratingUpdateUri;
 	@Value("${botTriggerUri}")
 	private String botTriggerUrl;
 	@Value("${generateTokenUri}")
@@ -213,4 +216,13 @@ public class SamuraiZenanalyticaIntegrationController {
 		return response.getBody().getAccess_token();
 	}
 
+	@PostMapping("/rate")
+	public void updateUserRating(@RequestBody UserRatingDto dto) {
+		log.info("Started updateUserRating call...........");
+		HttpEntity<UserRatingDto> requestEntity = new HttpEntity<UserRatingDto>(dto);
+		ResponseEntity<String> response = restTemplate.exchange(ratingUpdateUri, HttpMethod.POST, requestEntity,
+				String.class);
+		log.info("updateUserRating response status::" + response.getStatusCodeValue());
+		log.info("updateUserRating response body::" + response.getBody());
+	}
 }
