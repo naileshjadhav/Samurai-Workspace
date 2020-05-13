@@ -16,7 +16,7 @@ CREATE TABLE if not exists `samurai_rpa` (
   PRIMARY KEY (`samurai_rpa_id`)
 );
 
-CREATE TABLE `samurai_analytica` (
+CREATE TABLE if not exists `samurai_analytica` (
   `samurai_analytica_id` bigint NOT NULL AUTO_INCREMENT,
   `db_connection_url` varchar(100) DEFAULT NULL,
   `resolution_id` bigint DEFAULT NULL,
