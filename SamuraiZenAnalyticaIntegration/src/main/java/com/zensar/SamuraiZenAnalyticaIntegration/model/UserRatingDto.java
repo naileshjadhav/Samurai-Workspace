@@ -2,17 +2,18 @@ package com.zensar.SamuraiZenAnalyticaIntegration.model;
 
 public class UserRatingDto {
 
-	private Long responseId;
 	private String response;
 	int feedback; // 1- positive Feedback 0- Negative Feedback
+	private Long id;
 
-	public Long getResponseId() {
-		return responseId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setResponseId(Long responseId) {
-		this.responseId = responseId;
+	public void setId(Long id) {
+		this.id = id;
 	}
+
 
 	public String getResponse() {
 		return response;
@@ -28,6 +29,11 @@ public class UserRatingDto {
 
 	public void setFeedback(int feedback) {
 		this.feedback = feedback;
+	}
+
+	@Override
+	public String toString() {
+		return "UserRatingDto [responseId=" + id + ", response=" + response + ", feedback=" + feedback + "]";
 	}
 
 }

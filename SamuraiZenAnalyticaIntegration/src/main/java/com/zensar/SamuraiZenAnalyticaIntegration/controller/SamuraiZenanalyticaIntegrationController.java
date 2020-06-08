@@ -14,10 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,7 +79,7 @@ public class SamuraiZenanalyticaIntegrationController {
 	private static final String uipathTenantnameValue = "ZenDefaultvvzg306607";
 
 	@PostMapping(value = "/analytica", consumes = "application/json", produces = "application/json")
-	public java.util.List<SamuraiAnalyticaDto> samuraiAnalyticaRpaIntegration(@Valid @RequestBody SamuraiRpaDto rpaDto)
+	public ResponseEntity<SamuraiRpaDto> samuraiAnalyticaRpaIntegration(@Valid @RequestBody SamuraiRpaDto rpaDto)
 			throws Exception {
 
 		log.info("Started rpa call...........");
@@ -91,24 +91,26 @@ public class SamuraiZenanalyticaIntegrationController {
 		SamuraiRpaDto rpaDto2 = service.saveRpaRequest(rpaDto);
 
 		HttpEntity<SamuraiRpaDto> requestEntity = new HttpEntity<SamuraiRpaDto>(rpaDto);
-		ResponseEntity<List<SamuraiAnalyticaDto>> response = restTemplate.exchange(analyticaUri, HttpMethod.POST,
-				requestEntity, new ParameterizedTypeReference<List<SamuraiAnalyticaDto>>() {
-				});
+		ResponseEntity<SamuraiAnalyticaDto[]> response = restTemplate.exchange(analyticaUri, HttpMethod.POST,
+				requestEntity, SamuraiAnalyticaDto[].class);
 		log.info("Analytica response status::" + response.getStatusCodeValue());
 
 		if (response.getStatusCodeValue() == 200) {
-			rpaDto3 = response.getBody();
+			rpaDto3 = Arrays.asList(response.getBody());
+			log.info("Anlaytica response::" + rpaDto3);
 			rpaDto2.setAnalyticaDtos(rpaDto3);
 			rpaDto2 = service.saveRpaRequest(rpaDto2);
-			if (rpaDto2.getEformStatusByPlatform().equals(EFORM_STATUS_BY_PLATFORM)) {
+			if (rpaDto2.getEformStatusByPlatform() != null
+					&& rpaDto2.getEformStatusByPlatform().equals(EFORM_STATUS_BY_PLATFORM)) {
 				if (rpaDto2.getAnalyticaDtos().size() > 0
 						&& rpaDto2.getAnalyticaDtos().get(0).getResolutionPlatform().equals(EFORM_BOT)) {
 					triggerRpaBotProcess();
 				}
 			}
 		}
+		rpaDto2.setAnalyticaDtos(rpaDto3);
 		log.info("Finished rpa call...........");
-		return rpaDto3;
+		return new ResponseEntity<SamuraiRpaDto>(rpaDto2, HttpStatus.OK);
 	}
 
 	private void triggerRpaBotProcess() {
@@ -218,7 +220,11 @@ public class SamuraiZenanalyticaIntegrationController {
 
 	@PostMapping("/rate")
 	public void updateUserRating(@RequestBody UserRatingDto dto) {
-		log.info("Started updateUserRating call...........");
+		log.info("User feedback request from ZEVA::" + dto);
+		log.info("Started updateUserRating call..........." + dto.toString());
+		if (dto.getFeedback() == 0) {
+			dto.setFeedback(-1);
+		}
 		HttpEntity<UserRatingDto> requestEntity = new HttpEntity<UserRatingDto>(dto);
 		ResponseEntity<String> response = restTemplate.exchange(ratingUpdateUri, HttpMethod.POST, requestEntity,
 				String.class);

@@ -8,10 +8,10 @@ CREATE TABLE if not exists `samurai_rpa` (
   `impact` varchar(20) DEFAULT NULL,
   `platform_remarks` varchar(100) DEFAULT NULL,
   `request_date_time` datetime(6) DEFAULT NULL,
-  `severity` varchar(10) DEFAULT NULL,
+  `severity` varchar(20) DEFAULT NULL,
   `type_of_request` varchar(20) DEFAULT NULL,
-  `user_email` varchar(20) DEFAULT NULL,
-  `user_name` varchar(20) DEFAULT NULL,
+  `user_email` varchar(50) DEFAULT NULL,
+  `user_name` varchar(50) DEFAULT NULL,
   `zeva_request_id` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`samurai_rpa_id`)
 );
@@ -22,7 +22,7 @@ CREATE TABLE if not exists `samurai_analytica` (
   `resolution_id` bigint DEFAULT NULL,
   `resolution_platform` varchar(100) DEFAULT NULL,
   `resolution_rank` bigint DEFAULT NULL,
-  `resolution_response` varchar(5000) DEFAULT NULL,
+  `resolution_response` varchar(1000) DEFAULT NULL,
   `solution_type` varchar(50) DEFAULT NULL,
   `samurai_rpa_id` bigint DEFAULT NULL,
   PRIMARY KEY (`samurai_analytica_id`),

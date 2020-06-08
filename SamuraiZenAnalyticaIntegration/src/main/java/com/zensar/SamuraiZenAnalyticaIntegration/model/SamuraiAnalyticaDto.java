@@ -1,23 +1,28 @@
 package com.zensar.SamuraiZenAnalyticaIntegration.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SamuraiAnalyticaDto {
 
+	@JsonIgnore
 	private Long samuraiAnalyticaId;
 	private String dbConnectionUrl;
 	private String solutionType;
 	private String resolutionPlatform;
 	private String resolutionResponse;
-	private Long resolutionID;
+	private Long resolutionId;
 	private Long resolutionRank;
-	private SamuraiRpaDto samuraiRpaDto;
-
-	public SamuraiRpaDto getSamuraiRpaDto() {
-		return samuraiRpaDto;
-	}
-
-	public void setSamuraiRpaDto(SamuraiRpaDto samuraiRpaDto) {
-		this.samuraiRpaDto = samuraiRpaDto;
-	}
+//	private SamuraiRpaDto samuraiRpaDto;
+//
+//	public SamuraiRpaDto getSamuraiRpaDto() {
+//		return samuraiRpaDto;
+//	}
+//
+//	public void setSamuraiRpaDto(SamuraiRpaDto samuraiRpaDto) {
+//		this.samuraiRpaDto = samuraiRpaDto;
+//	}
 
 	public Long getSamuraiAnalyticaId() {
 		return samuraiAnalyticaId;
@@ -27,12 +32,12 @@ public class SamuraiAnalyticaDto {
 		this.samuraiAnalyticaId = samuraiAnalyticaId;
 	}
 
-	public Long getResolutionID() {
-		return resolutionID;
+	public Long getResolutionId() {
+		return resolutionId;
 	}
 
-	public void setResolutionID(Long resolutionID) {
-		this.resolutionID = resolutionID;
+	public void setResolutionId(Long resolutionId) {
+		this.resolutionId = resolutionId;
 	}
 
 	public Long getResolutionRank() {
@@ -75,4 +80,13 @@ public class SamuraiAnalyticaDto {
 		this.dbConnectionUrl = dbConnectionUrl;
 	}
 
+	@Override
+	public String toString() {
+		return "SamuraiAnalyticaDto [samuraiAnalyticaId=" + samuraiAnalyticaId + ", dbConnectionUrl=" + dbConnectionUrl
+				+ ", solutionType=" + solutionType + ", resolutionPlatform=" + resolutionPlatform
+				+ ", resolutionResponse=" + resolutionResponse + ", resolutionID=" + resolutionId + ", resolutionRank="
+				+ resolutionRank + "]";
+	}
+
+	
 }
