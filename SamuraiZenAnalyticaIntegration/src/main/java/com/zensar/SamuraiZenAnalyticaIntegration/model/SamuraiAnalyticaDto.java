@@ -14,15 +14,6 @@ public class SamuraiAnalyticaDto {
 	private String resolutionResponse;
 	private Long resolutionId;
 	private Long resolutionRank;
-//	private SamuraiRpaDto samuraiRpaDto;
-//
-//	public SamuraiRpaDto getSamuraiRpaDto() {
-//		return samuraiRpaDto;
-//	}
-//
-//	public void setSamuraiRpaDto(SamuraiRpaDto samuraiRpaDto) {
-//		this.samuraiRpaDto = samuraiRpaDto;
-//	}
 
 	public Long getSamuraiAnalyticaId() {
 		return samuraiAnalyticaId;
