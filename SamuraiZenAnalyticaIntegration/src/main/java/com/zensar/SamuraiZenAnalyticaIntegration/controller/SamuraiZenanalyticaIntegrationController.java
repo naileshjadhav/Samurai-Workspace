@@ -20,6 +20,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.zensar.SamuraiZenAnalyticaIntegration.model.RpaDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.SamuraiAnalyticaDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.SamuraiRpaDto;
 import com.zensar.SamuraiZenAnalyticaIntegration.model.StartInfo;
@@ -111,6 +113,31 @@ public class SamuraiZenanalyticaIntegrationController {
 		rpaDto2.setAnalyticaDtos(rpaDto3);
 		log.info("Finished rpa call...........");
 		return new ResponseEntity<SamuraiRpaDto>(rpaDto2, HttpStatus.OK);
+	}
+
+
+	@GetMapping(value = "/rpa")
+	public ResponseEntity<RpaDto> sendEformToRpa() {
+		log.info("Starting sendEformToRpa...");
+		RpaDto dto = new RpaDto();
+		SamuraiRpaDto rpaDto = service.getSamuraiRpaByEformIdAndEformStatus();
+		dto.setEformId(rpaDto.getEformId());
+		dto.setSamuraiRpaId(rpaDto.getSamuraiRpaId());
+		dto.setUserEmail(rpaDto.getUserEmail());
+		log.info("Finished sendEformToRpa..." + dto.toString());
+		return new ResponseEntity<RpaDto>(dto, HttpStatus.OK);
+	}
+
+	@PostMapping("/rpa")
+	public ResponseEntity<Boolean> updateEformStatus(@RequestBody RpaDto dto) {
+		log.info("Starting updateEformStatus..." + dto.toString());
+		Boolean value = false;
+		SamuraiRpaDto rpaDto = service.findSamuraiRpaById(dto.getSamuraiRpaId());
+		rpaDto.setEformStatusByPlatform(dto.getEformStatusByRpa());
+		rpaDto = service.mergeRpaRequest(rpaDto);
+		value = true;
+		log.info("Finished updateEformStatus...");
+		return new ResponseEntity<Boolean>(value, HttpStatus.OK);
 	}
 
 	private void triggerRpaBotProcess() {

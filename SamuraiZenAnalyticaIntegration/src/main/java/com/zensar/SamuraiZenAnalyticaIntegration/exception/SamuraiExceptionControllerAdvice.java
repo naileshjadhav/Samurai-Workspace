@@ -54,8 +54,9 @@ public class SamuraiExceptionControllerAdvice extends ResponseEntityExceptionHan
 		if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
 			request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
 
-			errors.add(ex.getMessage());
-			errors.add(ex.getCause().getLocalizedMessage());
+//			errors.add(ex.getMessage());
+//			errors.add(ex.getCause().getLocalizedMessage());
+			errors.add("Internal Server Error");
 		}
 		return new ResponseEntity<>(errors, headers, HttpStatus.INTERNAL_SERVER_ERROR);
 	}

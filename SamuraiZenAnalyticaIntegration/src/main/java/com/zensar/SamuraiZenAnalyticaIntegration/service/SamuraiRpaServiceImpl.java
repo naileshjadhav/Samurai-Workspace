@@ -66,16 +66,33 @@ public class SamuraiRpaServiceImpl implements SamuraiRpaService {
 	public SamuraiRpaDto mergeRpaRequest(SamuraiRpaDto dto) throws ResourceNotFound {
 
 		log.info("merging rpa request.....");
-		SamuraiRpa entity = new SamuraiRpa();
-		entity = repository.findById(dto.getSamuraiRpaId())
+		SamuraiRpa entity = repository.findById(dto.getSamuraiRpaId())
 				.orElseThrow(() -> new ResourceNotFound("Resource not found for id:: " + dto.getSamuraiRpaId()));
-//		entity.setDbConnectionUrl(dto.getDbConnectionUrl());
-//		entity.setResolutionPlatform(dto.getResolutionPlatform());
-//		entity.setResolutionResponse(dto.getResolutionResponse());
+		BeanUtils.copyProperties(dto, entity);
 		entity = repository.save(entity);
 		BeanUtils.copyProperties(entity, dto);
 		log.info("merge rpa request finished.....");
 		return dto;
+	}
+
+	@Override
+	public SamuraiRpaDto getSamuraiRpaByEformIdAndEformStatus() {
+		log.info("Starting getSamuraiRpaByEformIdAndEformStatus");
+		SamuraiRpa rpa = repository.getSamuraiRpaByEformIdAndEformStatus("UI_EFORM_BOT", "Open")
+				.orElseThrow(() -> new ResourceNotFound("Resource not found for rpa:: "));
+		log.info("getSamuraiRpaByEformIdAndEformStatus found SamuraiRpaId {}", rpa.getSamuraiRpaId());
+		SamuraiRpaDto target = new SamuraiRpaDto();
+		BeanUtils.copyProperties(rpa, target);
+		return target;
+	}
+
+	@Override
+	public SamuraiRpaDto findSamuraiRpaById(Long samuraiRpaId) {
+		SamuraiRpa rpa = repository.findById(samuraiRpaId)
+				.orElseThrow(() -> new ResourceNotFound("Resource not found for samuraiRpaId:: " + samuraiRpaId));
+		SamuraiRpaDto target = new SamuraiRpaDto();
+		BeanUtils.copyProperties(rpa, target);
+		return target;
 	}
 
 }
