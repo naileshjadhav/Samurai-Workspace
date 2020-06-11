@@ -30,6 +30,18 @@ public class SamuraiRpaDto {
 	private String platformRemarks;
 	private List<SamuraiAnalyticaDto> analyticaDtos = new ArrayList<SamuraiAnalyticaDto>();
 
+	public SamuraiRpaDto() {
+		super();
+	}
+
+	public SamuraiRpaDto(Long samuraiRpaId, String userEmail, Long eformId, String eformStatusByPlatform) {
+		super();
+		this.samuraiRpaId = samuraiRpaId;
+		this.userEmail = userEmail;
+		this.eformId = eformId;
+		this.eformStatusByPlatform = eformStatusByPlatform;
+	}
+
 	public List<SamuraiAnalyticaDto> getAnalyticaDtos() {
 		return analyticaDtos;
 	}

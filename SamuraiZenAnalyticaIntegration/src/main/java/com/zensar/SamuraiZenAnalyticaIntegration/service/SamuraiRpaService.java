@@ -12,7 +12,7 @@ public interface SamuraiRpaService {
 
 	List<SamuraiRpaDto> saveAllAnalyticaResponse(List<SamuraiRpaDto> rpaDto3);
 
-	SamuraiRpaDto getSamuraiRpaByEformIdAndEformStatus();
+	List<SamuraiRpaDto> getSamuraiRpaByEformIdAndEformStatus();
 
 	SamuraiRpaDto findSamuraiRpaById(Long samuraiRpaId);
 

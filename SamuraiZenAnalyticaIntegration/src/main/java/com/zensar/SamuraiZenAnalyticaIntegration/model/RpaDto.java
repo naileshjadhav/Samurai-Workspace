@@ -13,6 +13,17 @@ public class RpaDto {
 	private String userEmail;
 	private Long samuraiRpaId;
 
+	public RpaDto() {
+		super();
+	}
+
+	public RpaDto(Long eformId, String userEmail, Long samuraiRpaId) {
+		super();
+		this.eformId = eformId;
+		this.userEmail = userEmail;
+		this.samuraiRpaId = samuraiRpaId;
+	}
+
 	public Long getSamuraiRpaId() {
 		return samuraiRpaId;
 	}
@@ -50,7 +61,5 @@ public class RpaDto {
 		return "RpaDto [eformId=" + eformId + ", eformStatusByRpa=" + eformStatusByRpa + ", userEmail=" + userEmail
 				+ ", samuraiRpaId=" + samuraiRpaId + "]";
 	}
-	
-	
 
 }

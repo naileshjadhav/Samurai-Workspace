@@ -2,6 +2,7 @@ package com.zensar.SamuraiZenAnalyticaIntegration.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,14 +77,13 @@ public class SamuraiRpaServiceImpl implements SamuraiRpaService {
 	}
 
 	@Override
-	public SamuraiRpaDto getSamuraiRpaByEformIdAndEformStatus() {
+	public List<SamuraiRpaDto> getSamuraiRpaByEformIdAndEformStatus() {
 		log.info("Starting getSamuraiRpaByEformIdAndEformStatus");
-		SamuraiRpa rpa = repository.getSamuraiRpaByEformIdAndEformStatus("UI_EFORM_BOT", "Open")
+		List<SamuraiRpa> rpa = repository.getSamuraiRpaByEformIdAndEformStatus("UI_EFORM_BOT", "Open")
 				.orElseThrow(() -> new ResourceNotFound("Resource not found for rpa:: "));
-		log.info("getSamuraiRpaByEformIdAndEformStatus found SamuraiRpaId {}", rpa.getSamuraiRpaId());
-		SamuraiRpaDto target = new SamuraiRpaDto();
-		BeanUtils.copyProperties(rpa, target);
-		return target;
+		rpa.forEach(e -> log.info("getSamuraiRpaByEformIdAndEformStatus found SamuraiRpaId {}", e.getSamuraiRpaId()));
+		List<SamuraiRpaDto> dtos = rpa.stream().map(e-> new SamuraiRpaDto(e.getSamuraiRpaId(),e.getUserEmail(),e.getEformId(),e.getEformStatusByPlatform())).collect(Collectors.toList());
+		return dtos;
 	}
 
 	@Override

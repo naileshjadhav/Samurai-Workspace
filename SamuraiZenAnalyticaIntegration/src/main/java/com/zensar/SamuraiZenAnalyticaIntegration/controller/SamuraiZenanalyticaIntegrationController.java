@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -115,17 +116,16 @@ public class SamuraiZenanalyticaIntegrationController {
 		return new ResponseEntity<SamuraiRpaDto>(rpaDto2, HttpStatus.OK);
 	}
 
-
 	@GetMapping(value = "/rpa")
-	public ResponseEntity<RpaDto> sendEformToRpa() {
+	public ResponseEntity<List<RpaDto>> sendEformToRpa() {
 		log.info("Starting sendEformToRpa...");
-		RpaDto dto = new RpaDto();
-		SamuraiRpaDto rpaDto = service.getSamuraiRpaByEformIdAndEformStatus();
-		dto.setEformId(rpaDto.getEformId());
-		dto.setSamuraiRpaId(rpaDto.getSamuraiRpaId());
-		dto.setUserEmail(rpaDto.getUserEmail());
-		log.info("Finished sendEformToRpa..." + dto.toString());
-		return new ResponseEntity<RpaDto>(dto, HttpStatus.OK);
+
+		List<SamuraiRpaDto> samuraiRpaDtos = service.getSamuraiRpaByEformIdAndEformStatus();
+		List<RpaDto> rpaDtos = samuraiRpaDtos.stream()
+				.map(e -> new RpaDto(e.getEformId(), e.getUserEmail(), e.getSamuraiRpaId()))
+				.collect(Collectors.toList());
+		rpaDtos.forEach(e -> log.info("Finished sendEformToRpa...{}", e.getSamuraiRpaId()));
+		return new ResponseEntity<List<RpaDto>>(rpaDtos, HttpStatus.OK);
 	}
 
 	@PostMapping("/rpa")
