@@ -3,7 +3,6 @@ package com.zensar.SamuraiZenAnalyticaIntegration.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,31 +15,41 @@ import javax.persistence.OneToMany;
 
 @Entity(name = "samurai_rpa")
 public class SamuraiRpa {
-
 	@Id
 	@Column(name = "samurai_rpa_id", length = 10)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long samuraiRpaId;
+
 	@Column(name = "zeva_request_id", length = 20)
 	private String zevaRequestId;
+
 	@Column(name = "user_name", length = 20)
 	private String userName;
+
 	@Column(name = "user_email", length = 20)
 	private String userEmail;
+
 	@Column(name = "request_date_time")
 	private LocalDateTime requestDateTime;
+
 	@Column(name = "severity", length = 10)
 	private String severity;
+
 	@Column(name = "impact", length = 20)
 	private String impact;
+
 	@Column(name = "eform_id", length = 20)
 	private Long eformId;
+
 	@Column(name = "type_of_request", length = 20)
 	private String typeOfRequest;
+
 	@Column(name = "eform_status_by_platform", length = 50)
 	private String eformStatusByPlatform;
+
 	@Column(name = "eform_status_update_date")
 	private LocalDateTime eformStatusUpdateDate;
+
 	@Column(name = "platform_remarks", length = 100)
 	private String platformRemarks;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -52,7 +61,7 @@ public class SamuraiRpa {
 	}
 
 	public List<SamuraiAnalytica> getAnalytica() {
-		return analytica;
+		return this.analytica;
 	}
 
 	public void setAnalytica(List<SamuraiAnalytica> analytica) {
@@ -60,7 +69,7 @@ public class SamuraiRpa {
 	}
 
 	public Long getSamuraiRpaId() {
-		return samuraiRpaId;
+		return this.samuraiRpaId;
 	}
 
 	public void setSamuraiRpaId(Long samuraiRpaId) {
@@ -68,7 +77,7 @@ public class SamuraiRpa {
 	}
 
 	public String getZevaRequestId() {
-		return zevaRequestId;
+		return this.zevaRequestId;
 	}
 
 	public void setZevaRequestId(String zevaRequestId) {
@@ -76,7 +85,7 @@ public class SamuraiRpa {
 	}
 
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
 
 	public void setUserName(String userName) {
@@ -84,7 +93,7 @@ public class SamuraiRpa {
 	}
 
 	public String getUserEmail() {
-		return userEmail;
+		return this.userEmail;
 	}
 
 	public void setUserEmail(String userEmail) {
@@ -92,7 +101,7 @@ public class SamuraiRpa {
 	}
 
 	public LocalDateTime getRequestDateTime() {
-		return requestDateTime;
+		return this.requestDateTime;
 	}
 
 	public void setRequestDateTime(LocalDateTime requestDateTime) {
@@ -100,7 +109,7 @@ public class SamuraiRpa {
 	}
 
 	public String getSeverity() {
-		return severity;
+		return this.severity;
 	}
 
 	public void setSeverity(String severity) {
@@ -108,7 +117,7 @@ public class SamuraiRpa {
 	}
 
 	public String getImpact() {
-		return impact;
+		return this.impact;
 	}
 
 	public void setImpact(String impact) {
@@ -116,7 +125,7 @@ public class SamuraiRpa {
 	}
 
 	public Long getEformId() {
-		return eformId;
+		return this.eformId;
 	}
 
 	public void setEformId(Long eformId) {
@@ -124,7 +133,7 @@ public class SamuraiRpa {
 	}
 
 	public String getTypeOfRequest() {
-		return typeOfRequest;
+		return this.typeOfRequest;
 	}
 
 	public void setTypeOfRequest(String typeOfRequest) {
@@ -132,7 +141,7 @@ public class SamuraiRpa {
 	}
 
 	public String getEformStatusByPlatform() {
-		return eformStatusByPlatform;
+		return this.eformStatusByPlatform;
 	}
 
 	public void setEformStatusByPlatform(String eformStatusByPlatform) {
@@ -140,7 +149,7 @@ public class SamuraiRpa {
 	}
 
 	public LocalDateTime getEformStatusUpdateDate() {
-		return eformStatusUpdateDate;
+		return this.eformStatusUpdateDate;
 	}
 
 	public void setEformStatusUpdateDate(LocalDateTime eformStatusUpdateDate) {
@@ -148,11 +157,10 @@ public class SamuraiRpa {
 	}
 
 	public String getPlatformRemarks() {
-		return platformRemarks;
+		return this.platformRemarks;
 	}
 
 	public void setPlatformRemarks(String platformRemarks) {
 		this.platformRemarks = platformRemarks;
 	}
-
 }
